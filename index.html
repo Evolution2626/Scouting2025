@@ -8,8 +8,291 @@
         /*! @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js */
         var saveAs=saveAs||function(e){"use strict";if(typeof e==="undefined"||typeof navigator!=="undefined"&&/MSIE [1-9]\./.test(navigator.userAgent)){return}var t=e.document,n=function(){return e.URL||e.webkitURL||e},r=t.createElementNS("http://www.w3.org/1999/xhtml","a"),o="download"in r,a=function(e){var t=new MouseEvent("click");e.dispatchEvent(t)},i=/constructor/i.test(e.HTMLElement)||e.safari,f=/CriOS\/[\d]+/.test(navigator.userAgent),u=function(t){(e.setImmediate||e.setTimeout)(function(){throw t},0)},s="application/octet-stream",d=1e3*40,c=function(e){var t=function(){if(typeof e==="string"){n().revokeObjectURL(e)}else{e.remove()}};setTimeout(t,d)},l=function(e,t,n){t=[].concat(t);var r=t.length;while(r--){var o=e["on"+t[r]];if(typeof o==="function"){try{o.call(e,n||e)}catch(a){u(a)}}}},p=function(e){if(/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(e.type)){return new Blob([String.fromCharCode(65279),e],{type:e.type})}return e},v=function(t,u,d){if(!d){t=p(t)}var v=this,w=t.type,m=w===s,y,h=function(){l(v,"writestart progress write writeend".split(" "))},S=function(){if((f||m&&i)&&e.FileReader){var r=new FileReader;r.onloadend=function(){var t=f?r.result:r.result.replace(/^data:[^;]*;/,"data:attachment/file;");var n=e.open(t,"_blank");if(!n)e.location.href=t;t=undefined;v.readyState=v.DONE;h()};r.readAsDataURL(t);v.readyState=v.INIT;return}if(!y){y=n().createObjectURL(t)}if(m){e.location.href=y}else{var o=e.open(y,"_blank");if(!o){e.location.href=y}}v.readyState=v.DONE;h();c(y)};v.readyState=v.INIT;if(o){y=n().createObjectURL(t);setTimeout(function(){r.href=y;r.download=u;a(r);h();c(y);v.readyState=v.DONE});return}S()},w=v.prototype,m=function(e,t,n){return new v(e,t||e.name||"download",n)};if(typeof navigator!=="undefined"&&navigator.msSaveOrOpenBlob){return function(e,t,n){t=t||e.name||"download";if(!n){e=p(e)}return navigator.msSaveOrOpenBlob(e,t)}}w.abort=function(){};w.readyState=w.INIT=0;w.WRITING=1;w.DONE=2;w.error=w.onwritestart=w.onprogress=w.onwrite=w.onabort=w.onerror=w.onwriteend=null;return m}(typeof self!=="undefined"&&self||typeof window!=="undefined"&&window||this.content);if(typeof module!=="undefined"&&module.exports){module.exports.saveAs=saveAs}else if(typeof define!=="undefined"&&define!==null&&define.amd!==null){define("FileSaver.js",function(){return saveAs})}
     </script>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: var(--main-darklg);
+            color: var(--main-light);
+        }
+        .hiddenBeforeMatch{
+            display: none;
+        }
+        .scouterInfo{
+            display: initial;
+        }
+        .doNotDoThis{
+            background-color: red;
+            color: white;
+        }
+        * {
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .col {
+            width: 33.33%;
+            float: left;
+        }
+        button{
+            height: 45px;
+            border-radius: 5px;
+            background-color: var(--primary-color);
+            color: var(black);
+            border: var(--main-dark);
+            border-style: solid;
+        }
+        #plusminusbutton {
+            width: 45px;
+            font-size: xx-large;
+        }
+        button:hover {
+            background-color: var(--main-dark);
+            color: var(--primary-color);
+        }
+        input[type=checkbox]{
+            height: 35px;
+            width: 35px;
+        }
+
+        input[type=number]{
+            height: 45px;
+            width: 45px;
+        }
+
+        #matchNb, #teamNb {
+            width: 100px;
+            height: 20px;
+        }
+
+        #debutMatch {
+            height: 75px;
+        }
+
+        :root {
+            --main-darklg: #414141;
+            --main-dark: #161d29;
+            --primary-color: #fff347;
+            --main-light: #FFFFFF;
+        }
+    </style>
 </head>
 <body>
+    <h1 id="stateMatch">État du match</h1>
+    <h3 id="matchTime" class="hiddenBeforeMatch">Match Time: </h3>
+    <div class="col">
+
+        <div class="scouterInfo">
+            <h4>Nom du scouter:</h4>
+            <input name="scouterName" type="text" id="scouterName" class="toExport">
+            <h4># du match</h4>
+            <input name="matchNb" type="number" id="matchNb" class="toExport">
+            <h4># de l'Équipe</h4>
+            <input name="teamNb" type="number" id="teamNb" class="toExport"><br><br>
+            <button id="debutMatch" onclick="debutMatch()">Début de match</button><br>
+            <br><br><br><br>
+            <button id="showScoutData" onclick="showAllScoutingData()">Télécharger/AirDrop les données de tout les matchs</button><br>
+
+            <br><br><br><br>
+            <form action="https://github.com/Evolution2626/scouting-data-parser/new/main" method="get" target="_blank">
+                <input type="text" name="filename" id="filename" hidden>
+                <input type="text" name="value" id="value" hidden>
+                <input type="submit" value="Upload all data to github">
+            </form>
+
+            <br><br><br><br>
+            <button id="clearScoutData" class="doNotDoThis" onclick="clearLocalstorage()">Supprimer les données de tous les matchs</button><br>
+
+
+        </div>
+
+        <div class="hiddenBeforeMatch">
+            <h4>Mode Autonome</h4>
+            
+            <input name="autoTraverserLigne" type="checkbox" id="autoTraverserLigne" class="toExport">A traverser ligne?<br>
+            <h4>Pièce auto</h4>
+            <p>Note Speaker</p>
+            <button id="plusminusbutton" onclick="autoNoteSpeaker.value--">-</button><input name="autoNoteSpeaker" type="number" id="autoNoteSpeaker" class="toExport" value="0"><button id="plusminusbutton" onclick="autoNoteSpeaker.value++">+</button><br>
+            <p>Note Amp </p>
+            <button id="plusminusbutton" onclick="autoNoteAmp.value--">-</button><input name="autoNoteAmp" type="number" id="autoNoteAmp" class="toExport" value="0"><button id="plusminusbutton" onclick="autoNoteAmp.value++">+</button><br>
+            
+        </div>
+    </div>
+        <div class="col hiddenBeforeMatch">
+            <h4>Teleop</h4>
     
+            <button id="defense" onclick="faitDefense()">Fait Défense</button><br>
+            
+            <h4>Pièce Teleop</h4>
+            <p>Note Speaker</p>
+            <button id="plusminusbutton" onclick="teleopNoteSpeaker.value--">-</button><input name="teleopNoteSpeaker" type="number" id="teleopNoteSpeaker" class="toExport" value="0"><button id="plusminusbutton" onclick="teleopNoteSpeaker.value++">+</button><br>
+            <p>Note Amp </p>
+            <button id="plusminusbutton" onclick="teleopNoteAmp.value--">-</button><input name="teleopNoteAmp" type="number" id="teleopNoteAmp" class="toExport" value="0"><button id="plusminusbutton" onclick="teleopNoteAmp.value++">+</button><br>
+
+            <p>Commentaire:</p><br>
+            <textarea name="commentaire" id="commentaire" class="toExport"></textarea><br>
+            <button id="finMatch" onclick="finMatch()">Fin de match</button>
+    
+        </div>
+
+        <div class="col hiddenBeforeMatch">
+            <h4>Peut ramasser des notes:</h4>
+            <input name="ramasseNoteParTerre" type="checkbox" id="ramasseNoteParTerre" class="toExport">Par terre<br>
+            <input name="ramasseNoteFeedingStation" type="checkbox" id="ramasseNoteFeedingStation" class="toExport">Feeding Station<br>
+            <h4>Endgame</h4>
+    
+            <input name="climb" type="checkbox" id="climb" class="toExport">Est-ce que le robot est climbé?<br>
+            <input name="park" type="checkbox" id="park" class="toExport">Est-ce que le robot est parké?<br>
+            <input name="trap" type="checkbox" id="trap" class="toExport">Est-ce que le robot a fait la trap?<br>
+            
+            <h4>Pins</h4>
+            <p>Nombre de pin reçu</p>
+            <button id="plusminusbutton" onclick="pinRecu.value--">-</button><input name="pinRecu" type="number" id="pinRecu" class="toExport" value="0"><button id="plusminusbutton" onclick="pinRecu.value++">+</button><br>
+            <input name="bougePin" type="checkbox" id="bougePin" class="toExport">Bouge pendant pin?<br>
+            <p>Nombre de pin initié</p>
+            <button id="plusminusbutton" onclick="pinInitie.value--">-</button><input name="pinInitie" type="number" id="pinInitie" class="toExport" value="0"><button id="plusminusbutton" onclick="pinInitie.value++">+</button>
+            <p>Nombre de pénalité causé par les pins</p>
+            <button id="plusminusbutton" onclick="penoPin.value--">-</button><input name="penoPin" type="number" id="penoPin" class="toExport" value="0"><button id="plusminusbutton" onclick="penoPin.value++">+</button>
+    
+            
+        </div>
+    </div>
 </body>
+
+<script>
+
+    var timers = [];
+    var tempsDefense = [];
+
+
+    document.getElementById("filename").value = "/data/2024/Export" + Date.now() + ".json";
+
+    if (localStorage.getItem("scoutData")){
+        document.getElementById("value").value = localStorage.getItem("scoutData");
+    }
+
+    function exportAll(){
+        var thingsToExport = document.getElementsByClassName("toExport");
+
+        var outArray = {};
+
+        var totalTempsDefense = 0;
+
+        for (var i = 0; i < thingsToExport.length; i++) {
+            var element = thingsToExport[i];
+                //console.log(element.value);
+
+            if (element.type == "checkbox"){
+                    outArray[element.name] = element.checked;
+            }else{
+                outArray[element.name] = element.value;
+            }
+        }
+        for (let i = 0; i < tempsDefense.length; i++) {
+            totalTempsDefense += tempsDefense[i];
+        }
+
+        outArray["TimeDefense"] = totalTempsDefense;
+        return outArray;
+    }
+
+    function setDisplayStyle(nomStyle, className){
+        var elements = document.getElementsByClassName(className);
+        for (let index = 0; index < elements.length; index++) {
+            elements[index].style.display = nomStyle;
+            
+            }
+    }
+
+    setDisplayStyle("none", "hiddenBeforeMatch");
+
+    function startTimer(name){
+        timers[name] = ((new Date()).getTime() / 1000);
+    }
+
+    function getTimer(name){
+        return(((new Date()).getTime() / 1000) - timers[name]);
+    }
+
+    var interval = setInterval(setMatchState, 1000);
+
+    function setMatchState(){
+        
+        if (getTimer("match")) {
+            matchTime.innerText = "Remaining Match Time: " + Math.ceil(150-getTimer("match"));
+            if (getTimer("match") >= 16) {
+                stateMatch.innerText = "Teleop"
+                if (getTimer("match") >= 121) {
+                    stateMatch.innerText = "EndGame";
+                    if (getTimer("match") >= 151) {
+                        stateMatch.innerText = "Match finished"
+                        matchTime.innerText = "Remaining Match Time: 0";
+                    }
+                }
+            }
+        }
+    }
+    function faitDefense(){
+        if (defense.innerText == "Fait Défense") {
+            var timeMatch = getTimer("match");
+            startTimer("faitDefense");
+            defense.style.backgroundColor = "Red";
+            defense.style.color = "White";
+            defense.innerText = "Fini Défense";
+
+        }else {
+            var timeDefense = getTimer("faitDefense");
+            tempsDefense.push(timeDefense);
+            defense.style.backgroundColor = "#fff347";
+            defense.style.color = "black";
+            defense.innerText = "Fait Défense";
+
+        }
+    }
+
+    function debutMatch(){
+        startTimer("match");
+        setDisplayStyle("initial", "hiddenBeforeMatch");
+        setDisplayStyle("none", "scouterInfo");
+        stateMatch.innerText = "Autonomous";
+    }
+
+    function finMatch(){
+        if (confirm("Je confirme que les données sont valides.")) {
+            var blob = new Blob([JSON.stringify(exportAll())], {type: "text/plain;charset=utf-8"});
+            if (localStorage.getItem("scoutData")){
+                var data = JSON.parse(localStorage.getItem("scoutData"));
+                data.push(exportAll());
+                localStorage.setItem("scoutData", JSON.stringify(data));
+            }
+            else{
+                var data = [];
+                data.push(exportAll());
+                localStorage.setItem("scoutData", JSON.stringify(data));
+            }
+            saveAs(blob, "m" + exportAll().matchNb + "t" + exportAll().teamNb + ".json");
+            
+            location.reload();
+        }
+    }
+    function showAllScoutingData() {
+        var data = JSON.parse(localStorage.getItem("scoutData"));
+        var exportAllDataFile = new Blob([JSON.stringify(data)], {type: "text/plain;charset=utf-8"});
+        saveAs(exportAllDataFile, "scoutingResults.json");
+    }
+
+    function clearLocalstorage(){
+
+        if (confirm("Attention, voulez-vous vraiment supprimer toutes les données?")) {
+            if (confirm("Êtes-vous vraiment sûr?")) {
+                if (confirm("Êtes-vous vraiment, vraiment sûr? Toutes les données seront perdues.")) {
+                    localStorage.clear();
+                }
+            }
+        }
+    }
+</script>
 </html>
