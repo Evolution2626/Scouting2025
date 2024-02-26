@@ -11,7 +11,7 @@
     <style>
         body{
             font-family: Arial, sans-serif;
-            text-align: center;
+            text-align: justify;
             background-color: var(--main-darklg);
             color: var(--main-light);
         }
@@ -29,7 +29,7 @@
             box-sizing: border-box;
         }
 
-        h2 {
+        h1 {
             text-align: center;
         }
 
@@ -109,22 +109,19 @@
 
         </div>
 
-        <div class="hiddenBeforeMatch">
-            <h4>Mode Autonome</h4>
-            
-            <input name="autoTraverserLigne" type="checkbox" id="autoTraverserLigne" class="toExport">A traverser ligne?<br>
+        <div class="hiddenBeforeMatch">            
+            <input name="autoTraverserLigne" type="checkbox" id="autoTraverserLigne" class="toExport">A traverser ligne pendant l'auto?<br>
             <h4>Pièce auto</h4>
             <p>Note Speaker</p>
             <button id="plusminusbutton" onclick="autoNoteSpeaker.value--">-</button><input name="autoNoteSpeaker" type="number" id="autoNoteSpeaker" class="toExport" value="0"><button id="plusminusbutton" onclick="autoNoteSpeaker.value++">+</button><br>
             <p>Note Amp </p>
-            <button id="plusminusbutton" onclick="autoNoteAmp.value--">-</button><input name="autoNoteAmp" type="number" id="autoNoteAmp" class="toExport" value="0"><button id="plusminusbutton" onclick="autoNoteAmp.value++">+</button><br>
+            <button id="plusminusbutton" onclick="autoNoteAmp.value--">-</button><input name="autoNoteAmp" type="number" id="autoNoteAmp" class="toExport" value="0"><button id="plusminusbutton" onclick="autoNoteAmp.value++">+</button><br><br><br>
+            <button id="defense" onclick="faitDefense()">Fait Défense</button><br>
             
         </div>
     </div>
         <div class="col hiddenBeforeMatch">
-            <h4>Teleop</h4>
     
-            <button id="defense" onclick="faitDefense()">Fait Défense</button><br>
             
             <h4>Pièce Teleop</h4>
             <p>Note Speaker</p>
@@ -132,10 +129,15 @@
             <p>Note Amp </p>
             <button id="plusminusbutton" onclick="teleopNoteAmp.value--">-</button><input name="teleopNoteAmp" type="number" id="teleopNoteAmp" class="toExport" value="0"><button id="plusminusbutton" onclick="teleopNoteAmp.value++">+</button><br>
 
-            <p>Commentaire:</p><br>
-            <textarea name="commentaire" id="commentaire" class="toExport"></textarea><br>
-            <button id="finMatch" onclick="finMatch()">Fin de match</button>
-    
+            <h4>Pins</h4>
+            <p>Nombre de pin reçu</p>
+            <button id="plusminusbutton" onclick="pinRecu.value--">-</button><input name="pinRecu" type="number" id="pinRecu" class="toExport" value="0"><button id="plusminusbutton" onclick="pinRecu.value++">+</button>
+            <p>Nombre de pin initié</p>
+            <button id="plusminusbutton" onclick="pinInitie.value--">-</button><input name="pinInitie" type="number" id="pinInitie" class="toExport" value="0"><button id="plusminusbutton" onclick="pinInitie.value++">+</button>
+            <p>Nombre de pénalité causé par les pins</p>
+            <button id="plusminusbutton" onclick="penoPin.value--">-</button><input name="penoPin" type="number" id="penoPin" class="toExport" value="0"><button id="plusminusbutton" onclick="penoPin.value++">+</button>
+
+                
         </div>
 
         <div class="col hiddenBeforeMatch">
@@ -148,18 +150,14 @@
             <input name="park" type="checkbox" id="park" class="toExport">Est-ce que le robot est parké?<br>
             <input name="trap" type="checkbox" id="trap" class="toExport">Est-ce que le robot a fait la trap?<br>
             
-            <h4>Pins</h4>
-            <p>Nombre de pin reçu</p>
-            <button id="plusminusbutton" onclick="pinRecu.value--">-</button><input name="pinRecu" type="number" id="pinRecu" class="toExport" value="0"><button id="plusminusbutton" onclick="pinRecu.value++">+</button><br>
-            <input name="bougePin" type="checkbox" id="bougePin" class="toExport">Bouge pendant pin?<br>
-            <p>Nombre de pin initié</p>
-            <button id="plusminusbutton" onclick="pinInitie.value--">-</button><input name="pinInitie" type="number" id="pinInitie" class="toExport" value="0"><button id="plusminusbutton" onclick="pinInitie.value++">+</button>
-            <p>Nombre de pénalité causé par les pins</p>
-            <button id="plusminusbutton" onclick="penoPin.value--">-</button><input name="penoPin" type="number" id="penoPin" class="toExport" value="0"><button id="plusminusbutton" onclick="penoPin.value++">+</button>
-    
+            <p>Commentaire:</p><br>
+            <textarea name="commentaire" id="commentaire" class="toExport"></textarea><br>
+            <button id="finMatch" onclick="finMatch()">Fin de match</button>
+
+
+
             
         </div>
-    </div>
 </body>
 
 <script>
