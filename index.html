@@ -34,7 +34,7 @@
         }
 
         .col {
-            width: 33.33%;
+            width: 25%;
             float: left;
         }
         button{
@@ -112,22 +112,27 @@
         <div class="hiddenBeforeMatch">            
             <input name="autoTraverserLigne" type="checkbox" id="autoTraverserLigne" class="toExport">A traverser ligne pendant l'auto?<br>
             <h4>Pièce auto</h4>
-            <p>Note Speaker</p>
-            <button id="plusminusbutton" onclick="autoNoteSpeaker.value--">-</button><input name="autoNoteSpeaker" type="number" id="autoNoteSpeaker" class="toExport" value="0"><button id="plusminusbutton" onclick="autoNoteSpeaker.value++">+</button><br>
-            <p>Note Amp </p>
-            <button id="plusminusbutton" onclick="autoNoteAmp.value--">-</button><input name="autoNoteAmp" type="number" id="autoNoteAmp" class="toExport" value="0"><button id="plusminusbutton" onclick="autoNoteAmp.value++">+</button><br><br><br>
+            <p>Corail etage 1</p>
+            <button id="plusminusbutton" onclick="autoCorailEtage1.value--">-</button><input name="autoCorailEtage1" type="number" id="autoCorailEtage1" class="toExport" value="0"><button id="plusminusbutton" onclick="autoCorailEtage1.value++">+</button><br>
+            <p>Corail etage 2 </p>
+            <button id="plusminusbutton" onclick="autoCorailEtage2.value--">-</button><input name="autoCorailEtage2" type="number" id="autoCorailEtage2" class="toExport" value="0"><button id="plusminusbutton" onclick="autoCorailEtage2.value++">+</button><br>
+            <p>Corail etage 3</p>
+            <button id="plusminusbutton" onclick="autoCorailEtage3.value--">-</button><input name="autoCorailEtage3" type="number" id="autoCorailEtage3" class="toExport" value="0"><button id="plusminusbutton" onclick="autoCorailEtage3.value++">+</button><br>
+            <p>Corail etage 4</p>
+            <button id="plusminusbutton" onclick="autoCorailEtage4.value--">-</button><input name="autoCorailEtage4" type="number" id="autoCorailEtage4" class="toExport" value="0"><button id="plusminusbutton" onclick="autoCorailEtage4.value++">+</button><br><br><br>
             <button id="defense" onclick="faitDefense()">Fait Défense</button><br>
             
         </div>
     </div>
+        <div></div>
         <div class="col hiddenBeforeMatch">
     
             
             <h4>Pièce Teleop</h4>
-            <p>Note Speaker</p>
-            <button id="plusminusbutton" onclick="teleopNoteSpeaker.value--">-</button><input name="teleopNoteSpeaker" type="number" id="teleopNoteSpeaker" class="toExport" value="0"><button id="plusminusbutton" onclick="teleopNoteSpeaker.value++">+</button><br>
-            <p>Note Amp </p>
-            <button id="plusminusbutton" onclick="teleopNoteAmp.value--">-</button><input name="teleopNoteAmp" type="number" id="teleopNoteAmp" class="toExport" value="0"><button id="plusminusbutton" onclick="teleopNoteAmp.value++">+</button><br>
+            <p>Algue processeur</p>
+            <button id="plusminusbutton" onclick="algueProcesseur.value--">-</button><input name="algueProcesseur" type="number" id="algueProcesseur" class="toExport" value="0"><button id="plusminusbutton" onclick="algueProcesseur.value++">+</button><br>
+            <p>Algue net</p>
+            <button id="plusminusbutton" onclick="algueNet.value--">-</button><input name="algueNet" type="number" id="algueNet" class="toExport" value="0"><button id="plusminusbutton" onclick="algueNet.value++">+</button><br>
 
             <h4>Pins</h4>
             <p>Nombre de pin reçu</p>
@@ -139,16 +144,29 @@
 
                 
         </div>
-
         <div class="col hiddenBeforeMatch">
-            <h4>Peut ramasser des notes:</h4>
-            <input name="ramasseNoteParTerre" type="checkbox" id="ramasseNoteParTerre" class="toExport">Par terre<br>
-            <input name="ramasseNoteFeedingStation" type="checkbox" id="ramasseNoteFeedingStation" class="toExport">Feeding Station<br>
+            <p>Corail etage 1</p>
+            <button id="plusminusbutton" onclick="corailEtage1.value--">-</button><input name="corailEtage1" type="number" id="corailEtage1" class="toExport" value="0"><button id="plusminusbutton" onclick="corailEtage1.value++">+</button><br>
+            <p>Corail etage 2 </p>
+            <button id="plusminusbutton" onclick="corailEtage2.value--">-</button><input name="corailEtage2" type="number" id="corailEtage2" class="toExport" value="0"><button id="plusminusbutton" onclick="corailEtage2.value++">+</button><br>
+            <p>Corail etage 3</p>
+            <button id="plusminusbutton" onclick="corailEtage3.value--">-</button><input name="corailEtage3" type="number" id="corailEtage3" class="toExport" value="0"><button id="plusminusbutton" onclick="corailEtage3.value++">+</button><br>
+            <p>Corail etage 4</p>
+            <button id="plusminusbutton" onclick="corailEtage4.value--">-</button><input name="corailEtage4" type="number" id="corailEtage4" class="toExport" value="0"><button id="plusminusbutton" onclick="corailEtage4.value++">+</button><br><br><br>
+
+        </div>
+        
+        <div class="col hiddenBeforeMatch">
+            <h4>Peut ramasser:</h4>
+            <input name="ramasseAlgueParTerre" type="checkbox" id="ramasseAlgueParTerre" class="toExport">Algue par terre<br>
+            <input name="ramasseCorailFeedingStation" type="checkbox" id="ramasseCorailFeedingStation" class="toExport">Corail feeding Station<br>
+            <input name="ramasseCorailParTerre" type="checkbox" id="ramasseCorailParTerre" class="toExport">Corail par terre<br>
+
             <h4>Endgame</h4>
     
-            <input name="climb" type="checkbox" id="climb" class="toExport">Est-ce que le robot est climbé?<br>
+            <input name="climb_deep" type="checkbox" id="climb_deep" class="toExport">Est-ce que le robot est climbé deep?<br>
             <input name="park" type="checkbox" id="park" class="toExport">Est-ce que le robot est parké?<br>
-            <input name="trap" type="checkbox" id="trap" class="toExport">Est-ce que le robot a fait la trap?<br>
+            <input name="climb_shallow" type="checkbox" id="climb_shallow" class="toExport">Est-ce que le robot est climbé shallow?<br>
             
             <p>Commentaire:</p><br>
             <textarea name="commentaire" id="commentaire" class="toExport"></textarea><br>
