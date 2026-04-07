@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="fr" manifest="scouting.appcache">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scouting 2026 – REBUILT</title>
+    <script>
+        /*! @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js */
+        var saveAs=saveAs||function(e){"use strict";if(typeof e==="undefined"||typeof navigator!=="undefined"&&/MSIE [1-9]\./.test(navigator.userAgent)){return}var t=e.document,n=function(){return e.URL||e.webkitURL||e},r=t.createElementNS("http://www.w3.org/1999/xhtml","a"),o="download"in r,a=function(e){var t=new MouseEvent("click");e.dispatchEvent(t)},i=/constructor/i.test(e.HTMLElement)||e.safari,f=/CriOS\/[\d]+/.test(navigator.userAgent),u=function(t){(e.setImmediate||e.setTimeout)(function(){throw t},0)},s="application/octet-stream",d=1e3*40,c=function(e){var t=function(){if(typeof e==="string"){n().revokeObjectURL(e)}else{e.remove()}};setTimeout(t,d)},l=function(e,t,n){t=[].concat(t);var r=t.length;while(r--){var o=e["on"+t[r]];if(typeof o==="function"){try{o.call(e,n||e)}catch(a){u(a)}}}},p=function(e){if(/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(e.type)){return new Blob([String.fromCharCode(65279),e],{type:e.type})}return e},v=function(t,u,d){if(!d){t=p(t)}var v=this,w=t.type,m=w===s,y,h=function(){l(v,"writestart progress write writeend".split(" "))},S=function(){if((f||m&&i)&&e.FileReader){var r=new FileReader;r.onloadend=function(){var t=f?r.result:r.result.replace(/^data:[^;]*;/,"data:attachment/file;");var n=e.open(t,"_blank");if(!n)e.location.href=t;t=undefined;v.readyState=v.DONE;h()};r.readAsDataURL(t);v.readyState=v.INIT;return}if(!y){y=n().createObjectURL(t)}if(m){e.location.href=y}else{var o=e.open(y,"_blank");if(!o){e.location.href=y}}v.readyState=v.DONE;h();c(y)};v.readyState=v.INIT;if(o){y=n().createObjectURL(t);setTimeout(function(){r.href=y;r.download=u;a(r);h();c(y);v.readyState=v.DONE});return}S()},w=v.prototype,m=function(e,t,n){return new v(e,t||e.name||"download",n)};if(typeof navigator!=="undefined"&&navigator.msSaveOrOpenBlob){return function(e,t,n){t=t||e.name||"download";if(!n){e=p(e)}return navigator.msSaveOrOpenBlob(e,t)}}w.abort=function(){};w.readyState=w.INIT=0;w.WRITING=1;w.DONE=2;w.error=w.onwritestart=w.onprogress=w.onwrite=w.onabort=w.onerror=w.onwriteend=null;return m}(typeof self!=="undefined"&&self||typeof window!=="undefined"&&window||this.content);if(typeof module!=="undefined"&&module.exports){module.exports.saveAs=saveAs}else if(typeof define!=="undefined"&&define!==null&&define.amd!==null){define("FileSaver.js",function(){return saveAs})}
+    </script>
+    <style>
+        :root {
+            --main-darklg: #2b2b2b;
+            --main-dark: #1a1a2e;
+            --primary-color: #f5a623;
+            --primary-hover: #e09010;
+            --accent-color: #4fc3f7;
+            --main-light: #f0f0f0;
+            --section-bg: #363636;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --tower-l1: #66bb6a;
+            --tower-l2: #42a5f5;
+            --tower-l3: #ab47bc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--main-darklg);
+            color: var(--main-light);
+            padding: 10px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.6em;
+            margin: 10px 0;
+            color: var(--primary-color);
+        }
+
+        h2 {
+            font-size: 1.15em;
+            margin: 8px 0 6px 0;
+            padding: 6px 10px;
+            background: var(--main-dark);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 4px;
+        }
+
+        h3 {
+            text-align: center;
+            font-size: 1.1em;
+            margin: 6px 0;
+            color: var(--accent-color);
+        }
+
+        .section {
+            background: var(--section-bg);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 0;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .row label {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .counter {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        button {
+            height: 44px;
+            min-width: 44px;
+            border-radius: 6px;
+            background-color: var(--primary-color);
+            color: #000;
+            border: none;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        button:active {
+            transform: scale(0.96);
+        }
+
+        .btn-pm {
+            width: 44px;
+            height: 44px;
+            font-size: 1.5em;
+            border-radius: 50%;
+        }
+
+        .btn-large {
+            width: 100%;
+            height: 56px;
+            font-size: 1.15em;
+            margin: 8px 0;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: #fff;
+        }
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: #000;
+        }
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+
+        .btn-defense {
+            background-color: var(--accent-color);
+            color: #000;
+            width: 100%;
+            height: 50px;
+        }
+        .btn-defense.active {
+            background-color: var(--danger);
+            color: #fff;
+        }
+
+        input[type=number] {
+            width: 52px;
+            height: 44px;
+            text-align: center;
+            font-size: 1.1em;
+            border-radius: 6px;
+            border: 2px solid #555;
+            background: #222;
+            color: var(--main-light);
+        }
+
+        input[type=text], input[type=number].wide {
+            width: 140px;
+            height: 36px;
+            font-size: 1em;
+            border-radius: 6px;
+            border: 2px solid #555;
+            background: #222;
+            color: var(--main-light);
+            padding: 0 8px;
+        }
+
+        input[type=checkbox] {
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            accent-color: var(--primary-color);
+        }
+
+        select {
+            height: 40px;
+            font-size: 1em;
+            border-radius: 6px;
+            border: 2px solid #555;
+            background: #222;
+            color: var(--main-light);
+            padding: 0 8px;
+            cursor: pointer;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 70px;
+            font-size: 1em;
+            border-radius: 6px;
+            border: 2px solid #555;
+            background: #222;
+            color: var(--main-light);
+            padding: 8px;
+            resize: vertical;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: #444;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95em;
+            min-width: auto;
+            flex: 0;
+            white-space: nowrap;
+        }
+
+        .radio-group input[type=radio] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+        }
+
+        .hidden { display: none !important; }
+
+        .match-timer {
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: bold;
+            padding: 6px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .timer-auto { background: #1565c0; }
+        .timer-transition { background: #6a1b9a; }
+        .timer-shift { background: #2e7d32; }
+        .timer-shift-inactive { background: #b71c1c; }
+        .timer-endgame { background: #e65100; }
+        .timer-done { background: #333; }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .check-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 0;
+        }
+
+        .tower-select {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        .tower-select label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        .tower-select label:nth-child(1) { background: #444; }
+        .tower-select label:nth-child(2) { background: var(--tower-l1); color: #000; }
+        .tower-select label:nth-child(3) { background: var(--tower-l2); color: #000; }
+        .tower-select label:nth-child(4) { background: var(--tower-l3); color: #fff; }
+
+        .data-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .match-count {
+            text-align: center;
+            font-size: 0.9em;
+            color: #aaa;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 500px) {
+            body { padding: 6px; }
+            h1 { font-size: 1.3em; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ==================== PRE-MATCH ==================== -->
+<div id="preMatch">
+    <h1>🏗️ Scouting 2026 – REBUILT</h1>
+    <div class="section">
+        <h2>📋 Info du scouter</h2>
+        <div class="row">
+            <label for="scouterName">Nom du scouter</label>
+            <input type="text" name="scouterName" id="scouterName" class="toExport">
+        </div>
+        <div class="row">
+            <label for="matchNb"># du match</label>
+            <input type="number" name="matchNb" id="matchNb" class="toExport wide">
+        </div>
+        <div class="row">
+            <label for="teamNb"># de l'équipe</label>
+            <input type="number" name="teamNb" id="teamNb" class="toExport wide">
+        </div>
+        <div class="row">
+            <label for="allianceColor">Couleur alliance</label>
+            <select name="allianceColor" id="allianceColor" class="toExport">
+                <option value="red">Rouge</option>
+                <option value="blue">Bleu</option>
+            </select>
+        </div>
+    </div>
+
+    <button class="btn-large btn-success" id="debutMatch" onclick="debutMatch()">▶️ Début de match</button>
+
+    <div class="section data-actions">
+        <h2>💾 Données</h2>
+        <span class="match-count" id="matchCount"></span>
+        <button class="btn-large" onclick="showAllScoutingData()">📤 Télécharger toutes les données</button>
+        <form action="https://github.com/Evolution2626/scouting-data-parser/new/main" method="get" target="_blank">
+            <input type="text" name="filename" id="filename" hidden>
+            <input type="text" name="value" id="value" hidden>
+            <input type="submit" value="☁️ Upload données sur GitHub" style="width:100%;height:50px;font-size:1em;border-radius:6px;background:var(--primary-color);color:#000;font-weight:bold;border:none;cursor:pointer;">
+        </form>
+        <button class="btn-large btn-danger" onclick="clearLocalstorage()">🗑️ Supprimer toutes les données</button>
+    </div>
+</div>
+
+<!-- ==================== DURING MATCH ==================== -->
+<div id="duringMatch" class="hidden">
+    <h1>🏗️ REBUILT 2026</h1>
+    <div class="match-timer" id="matchTimer">⏱️ En attente…</div>
+    <h3 id="stateMatch">–</h3>
+
+    <!-- ===== AUTO ===== -->
+    <div class="section" id="sectionAuto">
+        <h2>🤖 Autonome (AUTO)</h2>
+
+        <div class="check-row">
+            <input type="checkbox" name="autoMobility" id="autoMobility" class="toExport">
+            <label for="autoMobility">A quitté la ligne de départ?</label>
+        </div>
+
+        <div class="row">
+            <label>Fuel marqué (HUB) – Auto</label>
+            <div class="counter">
+                <button class="btn-pm" onclick="dec('autoFuelScored')">−</button>
+                <input type="number" name="autoFuelScored" id="autoFuelScored" class="toExport" value="0" min="0">
+                <button class="btn-pm" onclick="inc('autoFuelScored')">+</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <label>Fuel raté – Auto</label>
+            <div class="counter">
+                <button class="btn-pm" onclick="dec('autoFuelMissed')">−</button>
+                <input type="number" name="autoFuelMissed" id="autoFuelMissed" class="toExport" value="0" min="0">
+                <button class="btn-pm" onclick="inc('autoFuelMissed')">+</button>
+            </div>
+        </div>
+
+        <div class="check-row">
+            <input type="checkbox" name="autoTowerL1" id="autoTowerL1" class="toExport">
+            <label for="autoTowerL1">Tour Niveau 1 en Auto? (15 pts)</label>
+        </div>
+    </div>
+
+    <!-- ===== TELEOP ===== -->
+    <div class="section" id="sectionTeleop">
+        <h2>🎮 Téléop (TELEOP)</h2>
+
+        <div class="row">
+            <label>Fuel marqué (HUB actif)</label>
+            <div class="counter">
+                <button class="btn-pm" onclick="dec('teleopFuelScored')">−</button>
+                <input type="number" name="teleopFuelScored" id="teleopFuelScored" class="toExport" value="0" min="0">
+                <button class="btn-pm" onclick="inc('teleopFuelScored')">+</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <label>Fuel raté</label>
+            <div class="counter">
+                <button class="btn-pm" onclick="dec('teleopFuelMissed')">−</button>
+                <input type="number" name="teleopFuelMissed" id="teleopFuelMissed" class="toExport" value="0" min="0">
+                <button class="btn-pm" onclick="inc('teleopFuelMissed')">+</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <label>Fuel marqué (HUB inactif)</label>
+            <div class="counter">
+                <button class="btn-pm" onclick="dec('teleopFuelInactive')">−</button>
+                <input type="number" name="teleopFuelInactive" id="teleopFuelInactive" class="toExport" value="0" min="0">
+                <button class="btn-pm" onclick="inc('teleopFuelInactive')">+</button>
+            </div>
+        </div>
+
+        <h2>📍 Source d'intake</h2>
+        <div class="grid-2">
+            <div class="check-row">
+                <input type="checkbox" name="intakeNeutralZone" id="intakeNeutralZone" class="toExport">
+                <label for="intakeNeutralZone">Zone neutre</label>
+            </div>
+            <div class="check-row">
+                <input type="checkbox" name="intakeDepot" id="intakeDepot" class="toExport">
+                <label for="intakeDepot">Dépôt</label>
+            </div>
+            <div class="check-row">
+                <input type="checkbox" name="intakeOutpost" id="intakeOutpost" class="toExport">
+                <label for="intakeOutpost">Outpost (Human Player)</label>
+            </div>
+            <div class="check-row">
+                <input type="checkbox" name="intakeGround" id="intakeGround" class="toExport">
+                <label for="intakeGround">Par terre</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TRAVERSAL ===== -->
+    <div class="section" id="sectionTraversal">
+        <h2>🧗 Obstacles</h2>
+        <div class="grid-2">
+            <div class="check-row">
+                <input type="checkbox" name="crossesBumps" id="crossesBumps" class="toExport">
+                <label for="crossesBumps">Traverse les Bumps</label>
+            </div>
+            <div class="check-row">
+                <input type="checkbox" name="usesTrenches" id="usesTrenches" class="toExport">
+                <label for="usesTrenches">Passe sous les Trenches</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== DEFENSE ===== -->
+    <div class="section" id="sectionDefense">
+        <h2>🛡️ Défense</h2>
+        <button class="btn-defense" id="defenseBtn" onclick="toggleDefense()">🛡️ Début défense</button>
+
+        <div class="row" style="margin-top:8px;">
+            <label>Pins reçus</label>
+            <div class="counter">
+                <button class="btn-pm" onclick="dec('pinRecu')">−</button>
+                <input type="number" name="pinRecu" id="pinRecu" class="toExport" value="0" min="0">
+                <button class="btn-pm" onclick="inc('pinRecu')">+</button>
+            </div>
+        </div>
+        <div class="row">
+            <label>Pins initiés</label>
+            <div class="counter">
+                <button class="btn-pm" onclick="dec('pinInitie')">−</button>
+                <input type="number" name="pinInitie" id="pinInitie" class="toExport" value="0" min="0">
+                <button class="btn-pm" onclick="inc('pinInitie')">+</button>
+            </div>
+        </div>
+        <div class="row">
+            <label>Pénalités causées (fouls)</label>
+            <div class="counter">
+                <button class="btn-pm" onclick="dec('foulsCommis')">−</button>
+                <input type="number" name="foulsCommis" id="foulsCommis" class="toExport" value="0" min="0">
+                <button class="btn-pm" onclick="inc('foulsCommis')">+</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ENDGAME ===== -->
+    <div class="section" id="sectionEndgame">
+        <h2>🏁 Fin de match (ENDGAME)</h2>
+        <p style="margin-bottom:8px;">Niveau de la Tour atteint:</p>
+        <div class="tower-select">
+            <label><input type="radio" name="towerLevel" value="none" class="toExport" checked> Aucun</label>
+            <label><input type="radio" name="towerLevel" value="L1" class="toExport"> Niv 1 (10pts)</label>
+            <label><input type="radio" name="towerLevel" value="L2" class="toExport"> Niv 2 (20pts)</label>
+            <label><input type="radio" name="towerLevel" value="L3" class="toExport"> Niv 3 (30pts)</label>
+        </div>
+
+        <div class="check-row" style="margin-top:10px;">
+            <input type="checkbox" name="parked" id="parked" class="toExport">
+            <label for="parked">Parké (sur Tower Base, pas grimpé)</label>
+        </div>
+    </div>
+
+    <!-- ===== QUALITATIVE ===== -->
+    <div class="section" id="sectionQual">
+        <h2>📝 Observations</h2>
+
+        <div class="row">
+            <label>Vitesse de tir</label>
+            <select name="shootingSpeed" id="shootingSpeed" class="toExport">
+                <option value="">–</option>
+                <option value="fast">Rapide</option>
+                <option value="medium">Moyen</option>
+                <option value="slow">Lent</option>
+            </select>
+        </div>
+
+        <div class="row">
+            <label>Capacité fuel estimée</label>
+            <select name="fuelCapacity" id="fuelCapacity" class="toExport">
+                <option value="">–</option>
+                <option value="1-3">1-3</option>
+                <option value="4-8">4-8</option>
+                <option value="9+">9+</option>
+            </select>
+        </div>
+
+        <div class="row">
+            <label>Qualité du drivetrain</label>
+            <select name="driveQuality" id="driveQuality" class="toExport">
+                <option value="">–</option>
+                <option value="excellent">Excellent</option>
+                <option value="good">Bon</option>
+                <option value="average">Moyen</option>
+                <option value="poor">Mauvais</option>
+            </select>
+        </div>
+
+        <div class="check-row">
+            <input type="checkbox" name="disabled" id="disabled" class="toExport">
+            <label for="disabled">Robot désactivé/brisé pendant le match</label>
+        </div>
+
+        <div class="check-row">
+            <input type="checkbox" name="yellowCard" id="yellowCard" class="toExport">
+            <label for="yellowCard">Carton jaune</label>
+        </div>
+
+        <div class="check-row">
+            <input type="checkbox" name="redCard" id="redCard" class="toExport">
+            <label for="redCard">Carton rouge</label>
+        </div>
+
+        <div style="margin-top:8px;">
+            <label for="commentaire">Commentaires:</label><br>
+            <textarea name="commentaire" id="commentaire" class="toExport" placeholder="Notes sur le robot, stratégie, problèmes observés…"></textarea>
+        </div>
+    </div>
+
+    <button class="btn-large btn-success" onclick="finMatch()">✅ Fin de match – Sauvegarder</button>
+</div>
+
+<script>
+    // ==================== STATE ====================
+    var timers = {};
+    var tempsDefense = [];
+    var defenseActive = false;
+
+    // ==================== INIT ====================
+    document.getElementById("filename").value = "/data/2026/Export" + Date.now() + ".json";
+    updateMatchCount();
+    updateGithubValue();
+
+    function updateMatchCount() {
+        var data = JSON.parse(localStorage.getItem("scoutData2026") || "[]");
+        document.getElementById("matchCount").textContent = data.length + " match(s) sauvegardé(s)";
+    }
+
+    function updateGithubValue() {
+        if (localStorage.getItem("scoutData2026")) {
+            document.getElementById("value").value = localStorage.getItem("scoutData2026");
+        }
+    }
+
+    // ==================== COUNTER HELPERS ====================
+    function inc(id) {
+        var el = document.getElementById(id);
+        el.value = parseInt(el.value || 0) + 1;
+    }
+
+    function dec(id) {
+        var el = document.getElementById(id);
+        var v = parseInt(el.value || 0) - 1;
+        el.value = v < 0 ? 0 : v;
+    }
+
+    // ==================== TIMER ====================
+    function startTimer(name) {
+        timers[name] = Date.now() / 1000;
+    }
+
+    function getTimer(name) {
+        if (!timers[name]) return 0;
+        return (Date.now() / 1000) - timers[name];
+    }
+
+    var matchInterval = setInterval(updateMatchState, 250);
+
+    function updateMatchState() {
+        var elapsed = getTimer("match");
+        if (!elapsed) return;
+
+        var timerEl = document.getElementById("matchTimer");
+        var stateEl = document.getElementById("stateMatch");
+        var totalMatch = 160; // 20 AUTO + 140 TELEOP
+        var remaining = Math.max(0, totalMatch - elapsed);
+
+        // AUTO: 0-20s
+        if (elapsed < 20) {
+            var autoRemain = Math.ceil(20 - elapsed);
+            timerEl.textContent = "AUTO – " + autoRemain + "s";
+            timerEl.className = "match-timer timer-auto";
+            stateEl.textContent = "🤖 Période Autonome";
+        }
+        // 3s scoring delay
+        else if (elapsed < 23) {
+            timerEl.textContent = "⏳ Évaluation AUTO…";
+            timerEl.className = "match-timer timer-transition";
+            stateEl.textContent = "Transition";
+        }
+        // TRANSITION SHIFT: 23-33s (2:20-2:10)
+        else if (elapsed < 33) {
+            var r = Math.ceil(33 - elapsed);
+            timerEl.textContent = "TRANSITION – " + r + "s | Match: " + formatTime(remaining);
+            timerEl.className = "match-timer timer-transition";
+            stateEl.textContent = "🔄 Transition (les 2 HUBs actifs)";
+        }
+        // SHIFT 1: 33-58s (2:10-1:45)
+        else if (elapsed < 58) {
+            var r = Math.ceil(58 - elapsed);
+            timerEl.textContent = "SHIFT 1 – " + r + "s | Match: " + formatTime(remaining);
+            timerEl.className = "match-timer timer-shift";
+            stateEl.textContent = "⚡ Shift 1 – HUBs alternés";
+        }
+        // SHIFT 2: 58-83s (1:45-1:20)
+        else if (elapsed < 83) {
+            var r = Math.ceil(83 - elapsed);
+            timerEl.textContent = "SHIFT 2 – " + r + "s | Match: " + formatTime(remaining);
+            timerEl.className = "match-timer timer-shift-inactive";
+            stateEl.textContent = "⚡ Shift 2 – HUBs alternés";
+        }
+        // SHIFT 3: 83-108s (1:20-0:55)
+        else if (elapsed < 108) {
+            var r = Math.ceil(108 - elapsed);
+            timerEl.textContent = "SHIFT 3 – " + r + "s | Match: " + formatTime(remaining);
+            timerEl.className = "match-timer timer-shift";
+            stateEl.textContent = "⚡ Shift 3 – HUBs alternés";
+        }
+        // SHIFT 4: 108-133s (0:55-0:30)
+        else if (elapsed < 133) {
+            var r = Math.ceil(133 - elapsed);
+            timerEl.textContent = "SHIFT 4 – " + r + "s | Match: " + formatTime(remaining);
+            timerEl.className = "match-timer timer-shift-inactive";
+            stateEl.textContent = "⚡ Shift 4 – HUBs alternés";
+        }
+        // END GAME: 133-163s (0:30-0:00)
+        else if (elapsed < 163) {
+            var r = Math.ceil(163 - elapsed);
+            timerEl.textContent = "🏁 ENDGAME – " + r + "s";
+            timerEl.className = "match-timer timer-endgame";
+            stateEl.textContent = "🏁 Fin de match (les 2 HUBs actifs)";
+        }
+        else {
+            timerEl.textContent = "✅ Match terminé";
+            timerEl.className = "match-timer timer-done";
+            stateEl.textContent = "Match terminé!";
+        }
+    }
+
+    function formatTime(seconds) {
+        var m = Math.floor(seconds / 60);
+        var s = Math.ceil(seconds % 60);
+        if (s === 60) { m++; s = 0; }
+        return m + ":" + (s < 10 ? "0" : "") + s;
+    }
+
+    // ==================== DEFENSE ====================
+    function toggleDefense() {
+        var btn = document.getElementById("defenseBtn");
+        if (!defenseActive) {
+            startTimer("defense");
+            btn.textContent = "🛑 Fin défense";
+            btn.classList.add("active");
+            defenseActive = true;
+        } else {
+            var dur = getTimer("defense");
+            tempsDefense.push(Math.round(dur));
+            btn.textContent = "🛡️ Début défense";
+            btn.classList.remove("active");
+            defenseActive = false;
+        }
+    }
+
+    // ==================== MATCH FLOW ====================
+    function debutMatch() {
+        var scouter = document.getElementById("scouterName").value.trim();
+        var matchNb = document.getElementById("matchNb").value.trim();
+        var teamNb = document.getElementById("teamNb").value.trim();
+
+        if (!scouter || !matchNb || !teamNb) {
+            alert("Veuillez remplir: Nom du scouter, # match, et # équipe.");
+            return;
+        }
+
+        startTimer("match");
+        document.getElementById("preMatch").classList.add("hidden");
+        document.getElementById("duringMatch").classList.remove("hidden");
+        window.scrollTo(0, 0);
+    }
+
+    function finMatch() {
+        // End defense if still active
+        if (defenseActive) {
+            toggleDefense();
+        }
+
+        if (!confirm("Je confirme que les données sont valides.")) return;
+
+        var exportData = exportAll();
+        var blob = new Blob([JSON.stringify(exportData, null, 2)], { type: "text/plain;charset=utf-8" });
+
+        // Save to localStorage
+        var data = JSON.parse(localStorage.getItem("scoutData2026") || "[]");
+        data.push(exportData);
+        localStorage.setItem("scoutData2026", JSON.stringify(data));
+
+        // Download individual file
+        saveAs(blob, "m" + exportData.matchNb + "t" + exportData.teamNb + ".json");
+
+        // Reload
+        location.reload();
+    }
+
+    // ==================== EXPORT ====================
+    function exportAll() {
+        var out = {};
+        var elements = document.getElementsByClassName("toExport");
+
+        for (var i = 0; i < elements.length; i++) {
+            var el = elements[i];
+            if (el.type === "checkbox") {
+                out[el.name] = el.checked;
+            } else if (el.type === "radio") {
+                if (el.checked) {
+                    out[el.name] = el.value;
+                }
+            } else {
+                out[el.name] = el.value;
+            }
+        }
+
+        // Defense time
+        var totalDefenseTime = 0;
+        for (var j = 0; j < tempsDefense.length; j++) {
+            totalDefenseTime += tempsDefense[j];
+        }
+        out["defenseTimeSec"] = totalDefenseTime;
+        out["defenseSegments"] = tempsDefense.length;
+
+        // Timestamp
+        out["timestamp"] = new Date().toISOString();
+        out["gameYear"] = 2026;
+
+        return out;
+    }
+
+    // ==================== DATA MANAGEMENT ====================
+    function showAllScoutingData() {
+        var data = JSON.parse(localStorage.getItem("scoutData2026") || "[]");
+        if (data.length === 0) {
+            alert("Aucune donnée sauvegardée.");
+            return;
+        }
+        var blob = new Blob([JSON.stringify(data, null, 2)], { type: "text/plain;charset=utf-8" });
+        saveAs(blob, "scoutingResults2026.json");
+    }
+
+    function clearLocalstorage() {
+        if (confirm("Attention, voulez-vous vraiment supprimer toutes les données?")) {
+            if (confirm("Êtes-vous vraiment sûr?")) {
+                if (confirm("Êtes-vous vraiment, vraiment sûr? Toutes les données seront perdues.")) {
+                    localStorage.removeItem("scoutData2026");
+                    updateMatchCount();
+                    updateGithubValue();
+                    alert("Données supprimées.");
+                }
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
